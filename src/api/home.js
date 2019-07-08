@@ -1,7 +1,12 @@
 import axios from 'axios';
 import jsonp from 'assets/js/jsonp';
-import { TIMEOUT, SUCC_CODE } from './condig';
-import { resolve } from 'path';
+import {
+  TIMEOUT,
+  SUCC_CODE,
+  HOME_RECOMMEND_PAGE_SIZE,
+  jsonpOptions
+} from './condig';
+// import { resolve } from 'path';
 // !get slider data ajax
 export const getHomeSlider = () => {
   return (
@@ -37,7 +42,10 @@ export const getHomeSlider = () => {
   );
 };
 
-export const getHomeRecommend = (page = 1, psize = 20) => {
+export const getHomeRecommend = (
+  page = 1,
+  psize = HOME_RECOMMEND_PAGE_SIZE
+) => {
   const url = 'https://ju.taobao.com/json/tg/ajaxGetItemsV2.json';
   const params = {
     page,
@@ -46,7 +54,25 @@ export const getHomeRecommend = (page = 1, psize = 20) => {
     frontCatId: ''
   };
 
-  return jsonp(url, params, { param: 'callback' }).then(res => {
-    console.log(res);
-  });
+  return jsonp(url, params, jsonpOptions)
+    .then(res => {
+      if (res.code === '200') {
+        return res;
+      }
+
+      throw new Error('没有成功获取到数据！');
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err);
+      }
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(res);
+          console.log(res);
+        }, 1000);
+      });
+    });
 };

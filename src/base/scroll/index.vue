@@ -29,6 +29,7 @@ export default {
     },
     data: {
       type: [Array, Object]
+      //
     },
     pullDown: {
       type: Boolean,
@@ -42,9 +43,9 @@ export default {
   data() {
     return {
       // 下拉参数设置
-      //   pulling: false,
-      //   pullDownText: PULL_DOWN_TEXT_INIT,
-      //   pullUpText: PULL_DOWN_TEXT_INIT, //没有
+      pulling: false,
+      pullDownText: PULL_DOWN_TEXT_INIT,
+      pullUpText: PULL_DOWN_TEXT_INIT, //没有
       swiperOption: {
         direction: "vertical", //!垂直滚动的滚动条
         slidesPerView: "auto",
@@ -53,14 +54,24 @@ export default {
         scrollbar: {
           el: this.scrollbar ? ".swiper-scrollbar" : null,
           hide: true
+        },
+        on: {
+          sliderMove: this.scroll,
+          touchEnd: this.touchEnd,
+          transitionEnd: this.scrollEnd
         }
-        // on: {
-        //   sliderMove: this.scroll,
-        //   touchEnd: this.touchEnd
-        //   // transitionEnd: this.scrollEnd
-        // }
       }
     };
+  },
+  watch: {
+    data() {
+      this.update();
+    }
+  },
+  methods: {
+    update() {
+      this.$refs.swiper && this.$refs.swiper.swiper.update();
+    }
   }
 };
 </script>
