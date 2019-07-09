@@ -1,12 +1,16 @@
 <template>
-  <div class="personal">personal</div>
+  <div class="personal">
+    personal
+  </div>
 </template>
 
 <script>
-export default {
-  name: "Personal"
-};
+
+  export default {
+    name: 'Personal'
+  };
 </script>
 
 <style lang="scss" scoped>
+
 </style>

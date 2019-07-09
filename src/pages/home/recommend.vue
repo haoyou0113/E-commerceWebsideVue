@@ -1,12 +1,10 @@
 <template>
   <div class="recommend">
-    <h3 class="recommend-title">Recommend</h3>
+    <h3 class="recommend-title">热卖推荐</h3>
     <div class="loading-container" v-if="!recommends.length">
-      <!-- //!当没有数据的时候显示加载 -->
       <me-loading inline />
     </div>
     <ul class="recommend-list" v-else>
-      <!-- //!否则显示内容 -->
       <li class="recommend-item" v-for="(item, index) in recommends" :key="index">
         <router-link
           class="recommend-link"

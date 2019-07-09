@@ -1,22 +1,25 @@
 <template>
-  <div class="swiper-container">
-    <swiper :options="swiperOption">
-      <slot></slot>
-      <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
-    </swiper>
-  </div>
+  <swiper :options="swiperOption" :key="keyId">
+    <!--<swiper-slide v-for="item in sliders">-->
+    <!--<a href="">-->
+    <!--<img src="" alt=""/>-->
+    <!--</a>-->
+    <!--</swiper-slide>-->
+    <slot></slot>
+    <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
+  </swiper>
 </template>
 
 <script>
 import { swiper } from "vue-awesome-swiper";
 export default {
-  name: "Meslider",
+  name: "MeSlider",
   components: {
     swiper
   },
   props: {
     direction: {
-      typr: String,
+      type: String,
       default: "horizontal",
       validator(value) {
         //!验证 whether arry including these elements
@@ -50,7 +53,25 @@ export default {
   },
   data() {
     return {
-      swiperOption: {
+      keyId: Math.random()
+    };
+  },
+  watch: {
+    data(newData) {
+      if (newData.length === 0) {
+        return;
+      }
+      this.swiperOption.loop = newData.length === 1 ? false : this.loop;
+      this.keyId = Math.random();
+    }
+  },
+  created() {
+    this.init();
+    //!初始化参数
+  },
+  methods: {
+    init() {
+      this.swiperOption = {
         watchOverflow: true,
         direction: this.direction,
         autoplay: this.interval
@@ -61,17 +82,19 @@ export default {
           : false,
         slidesPerView: 1,
         loop: this.data.length <= 1 ? false : this.loop,
+        // !防止只有一张slide时候 因为loop的原因自动前后添加
         pagination: {
           el: this.pagination ? ".swiper-pagination" : null
         }
-      }
-    };
+      };
+    }
   }
 };
 </script>
+
 <style lang="scss" scoped>
 .swiper-container {
-  widows: 100%;
+  width: 100%;
   height: 100%;
 }
 </style>

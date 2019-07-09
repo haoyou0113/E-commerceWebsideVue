@@ -9,14 +9,12 @@
     <div class="mine-navbar-right" v-if="$slots.right">
       <slot name="right"></slot>
     </div>
-    <h1 class="mine-navbar-title" v-if="title" v-text="title">
+    <h1 class="mine-navbar-title" v-if="title">
       <span class="mine-navbar-text" v-text="title"></span>
     </h1>
   </div>
 </template>
-
 <script>
-import { type } from "os";
 export default {
   name: "MeNavbar",
   props: {
@@ -27,6 +25,7 @@ export default {
   }
 };
 </script>
+
 <style lang="scss" scoped>
 @import "~assets/scss/mixins";
 
@@ -38,6 +37,7 @@ export default {
 
   &-left {
     margin-left: 10px;
+
     ~ .mine-navbar-right {
       position: static;
     }
@@ -46,6 +46,7 @@ export default {
   &-center {
     flex: 1;
     margin: 0 10px;
+
     ~ .mine-navbar-right {
       position: static;
     }
@@ -58,6 +59,7 @@ export default {
     height: 100%;
     margin-right: 10px;
   }
+
   &-title {
     position: absolute;
     top: 0;
@@ -69,9 +71,10 @@ export default {
   }
   &-text {
     width: 100%;
-    @include ellipsis();
     font-size: 18px;
+    text-align: center;
     line-height: 1.5; //!防止字母过长溢出元素
+    @include ellipsis();
   }
 }
 </style>

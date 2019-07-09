@@ -1,6 +1,6 @@
 <template>
-  <div class="slider-wrapper">
-    <me-loading v-if="!sliders.length"></me-loading>
+  <div class="slider-wapper">
+    <me-loading v-if="!sliders.length" />
     <me-slider
       :data="sliders"
       :direction="direction"
@@ -21,18 +21,20 @@
     </me-slider>
   </div>
 </template>
+
 <script>
 import MeSlider from "base/slider";
 import { swiperSlide } from "vue-awesome-swiper";
 import { sliderOptions } from "./config";
 import { getHomeSlider } from "../../api/home";
 import MeLoading from "base/loading";
+
 export default {
   name: "HomeSlider",
   components: {
     MeSlider,
-    swiperSlide,
-    MeLoading
+    MeLoading,
+    swiperSlide
   },
   data() {
     return {
@@ -40,48 +42,53 @@ export default {
       loop: sliderOptions.loop,
       interval: sliderOptions.interval,
       pagination: sliderOptions.pagination,
-      sliders: [
-        // {
-        //   linkUrl: "https://www.imooc.com",
-        //   picUrl: require("./1.jpg")
-        // },
-        // {
-        //   linkUrl: "https://www.imooc.com",
-        //   picUrl: require("./2.jpg")
-        // },
-        // {
-        //   linkUrl: "https://www.imooc.com",
-        //   picUrl: require("./3.jpg")
-        // },
-        // {
-        //   linkUrl: "https://www.imooc.com",
-        //   picUrl: require("./4.jpg")
-        // }
-      ]
+      sliders: []
+      // {
+      //  'linkUrl':'https://www.imooc.com',
+      //  'picUrl':require('./1.jpg')
+      // },
+      // {
+      //  'linkUrl':'https://www.imooc.com',
+      //  'picUrl':require('./2.jpg')
+      // },
+      // {
+      //  'linkUrl':'https://www.imooc.com',
+      //  'picUrl':require('./3.jpg')
+      // },{
+      //  'linkUrl':'https://www.imooc.com',
+      //  'picUrl':require('./4.jpg')
+      // }
     };
   },
   created() {
     this.getSliders();
   },
   methods: {
+    update() {
+      return this.getSliders();
+    },
     getSliders() {
-      getHomeSlider().then(data => {
+      return getHomeSlider().then(data => {
         this.sliders = data;
       });
     }
   }
 };
 </script>
+
 <style lang="scss" scoped>
-.slider-wrapper {
+.slider-wapper {
+  width: 100%;
   height: 183px;
-  margin-top: 50px;
 }
+
 .slider-link {
   display: block;
 }
+
 .slider-link,
 .slider-img {
+  overflow: hidden;
   width: 100%;
   height: 100%;
 }
