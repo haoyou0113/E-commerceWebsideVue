@@ -31,7 +31,7 @@
     PULL_UP_TEXT_ING,
     PULL_UP_TEXT_END
   } from './config';
-
+// !上啦下来提示文字
   export default {
     name: 'MeScroll',
     components: {
@@ -134,13 +134,13 @@
           } else {
             this.$refs.pullDownLoading.setText(PULL_DOWN_TEXT_INIT);
           }
-        } else if (swiper.isEnd) { // 上拉
+        } else if (swiper.isEnd) { // !上拉 是否到达底部
           if (!this.pullUp) {
             return;
           }
 
           const isPullUp = Math.abs(swiper.translate) + swiper.height - PULL_UP_HEIGHT > parseInt(swiper.$wrapperEl.css('height'));
-
+          //!是否满足条件
           if (isPullUp) {
             this.$refs.pullUpLoading.setText(PULL_UP_TEXT_START);
           } else {
@@ -200,7 +200,7 @@
           this.$emit('pull-down-transition-end');
         }, swiper.params.speed);
       },
-      pullUpEnd() {
+      pullUpEnd() { //!还原初始值
         const swiper = this.$refs.swiper.swiper;
         this.pulling = false;
         this.$refs.pullUpLoading.setText(PULL_UP_TEXT_END);
